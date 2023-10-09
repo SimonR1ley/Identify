@@ -1,4 +1,11 @@
-import {StyleSheet, Text, SafeAreaView, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  ScrollView,
+  Image,
+} from 'react-native';
 import React from 'react';
 
 const Match = () => {
@@ -16,17 +23,23 @@ const Match = () => {
           <View
             style={{
               width: '95%',
-              height: 450,
+              height: 350,
               backgroundColor: 'red',
               borderRadius: 30,
               alignSelf: 'center',
-            }}></View>
+            }}>
+            <Image
+              source={require('../assets/test.png')}
+              style={{width: '100%', height: '100%', borderRadius: 30}}
+            />
+          </View>
           <Text
             style={{
               fontSize: 20,
               fontWeight: '600',
               marginTop: 20,
-              alignSelf: 'center',
+              alignSelf: 'flex-start',
+              marginLeft: '5%',
             }}>
             Matches
           </Text>
@@ -50,15 +63,20 @@ const Match = () => {
                 height: '100%',
                 backgroundColor: 'red',
                 borderRadius: 20,
-                shadowColor: '#000000',
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-                shadowOpacity: 1,
-                shadowRadius: 3,
-                elevation: 2,
-              }}></View>
+                // shadowColor: '#000000',
+                // shadowOffset: {
+                //   width: 2,
+                //   height: 2,
+                // },
+                // shadowOpacity: 1,
+                // shadowRadius: 3,
+                // elevation: 2,
+              }}>
+              <Image
+                source={require('../assets/test.png')}
+                style={{width: '100%', height: '100%', borderRadius: 20}}
+              />
+            </View>
             <View
               style={{
                 width: '68%',
@@ -66,10 +84,15 @@ const Match = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 // backgroundColor: 'blue',
-                padding: 10,
+                padding: 5,
               }}>
-              <Text style={{fontWeight: '500', fontSize: 18}}>Hello</Text>
-              <Text style={{fontWeight: '500', fontSize: 15}}>Description</Text>
+              <Text style={{fontWeight: '500', fontSize: 18, marginBottom: 5}}>
+                Oak Tree
+              </Text>
+              <Text style={{fontWeight: '500', fontSize: 15}}>
+                There are approximately 600 different species of oak trees found
+                around the world. Some of the most common oak species...
+              </Text>
             </View>
           </View>
         </ScrollView>

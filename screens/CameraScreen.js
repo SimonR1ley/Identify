@@ -46,7 +46,9 @@ function CameraScreen() {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Text style={{fontWeight: '600'}}>Camera not available</Text>
+        <Text style={{fontWeight: '600'}}>
+          Camera not available. Check app permissions.
+        </Text>
       </SafeAreaView>
     );
   }

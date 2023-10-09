@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
 import {useState} from 'react';
@@ -128,7 +128,10 @@ const Login = () => {
                 width: 100,
                 height: 50,
               }}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => {
+                LoginUser();
+                navigation.navigate('Login');
+              }}
             />
 
             <TouchableOpacity
