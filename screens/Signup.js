@@ -181,15 +181,15 @@ const Signup = () => {
                 justifyContent: 'center',
                 width: 180,
                 height: 50,
-                backgroundColor: '#57D87B',
+                backgroundColor: '#2FA05E',
                 borderRadius: 10,
                 alignSelf: 'center',
                 marginTop: 20,
-                marginBottom: 30,
+                marginBottom: 20,
               }}
               // onPress={registerUser}
             >
-              <Text style={{color: 'black', fontWeight: '700', fontSize: 17}}>
+              <Text style={{color: 'white', fontWeight: '700', fontSize: 17}}>
                 Signup
               </Text>
             </TouchableOpacity>

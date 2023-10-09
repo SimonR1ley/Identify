@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
 import {useState} from 'react';
@@ -19,6 +19,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   // const logOn = async () => {
   //   setLoading(true);
@@ -39,7 +41,14 @@ const Login = () => {
   //   }
   // };
 
-  const navigation = useNavigation();
+  const LoginUser = async () => {
+    await AsyncStorage.setItem('profileSetupStatus', 'completed').then(
+      async () => {
+        navigation.navigate('CameraScreen');
+      },
+    );
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       {!loading ? (
@@ -74,7 +83,7 @@ const Login = () => {
           <View
             style={{
               width: '98%',
-              height: '70%',
+              height: '60%',
               alignSelf: 'center',
               alignItems: 'center',
               display: 'flex',
@@ -82,6 +91,7 @@ const Login = () => {
               justifyContent: 'center',
               gap: 20,
               backgroundColor: '#FFFFFF',
+              marginTop: 35,
             }}>
             <TextInput
               style={{
@@ -127,20 +137,20 @@ const Login = () => {
                 justifyContent: 'center',
                 width: 180,
                 height: 50,
-                backgroundColor: '#57D87B',
+                backgroundColor: '#2FA05E',
                 borderRadius: 10,
                 alignSelf: 'center',
                 marginTop: 20,
                 marginBottom: 10,
               }}
-              onPress={() => navigation.navigate('Match')}>
-              <Text style={{color: 'black', fontWeight: '700', fontSize: 17}}>
+              onPress={() => navigation.navigate('CameraScreen')}>
+              <Text style={{color: 'white', fontWeight: '700', fontSize: 17}}>
                 Login
               </Text>
             </TouchableOpacity>
 
             <Button
-              title="Signup"
+              title="Need an account?"
               color="black"
               style={{
                 width: 100,
