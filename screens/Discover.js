@@ -9,21 +9,23 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 
 const Discover = () => {
+  const navigation = useNavigation();
   const data = [
-    {key: '1', backgroundColor: 'white'},
-    {key: '2', backgroundColor: 'white'},
-    {key: '3', backgroundColor: 'white'},
-    {key: '4', backgroundColor: 'white'},
-    {key: '5', backgroundColor: 'white'},
-    {key: '6', backgroundColor: 'white'},
-    {key: '7', backgroundColor: 'white'},
-    {key: '8', backgroundColor: 'white'},
-    {key: '9', backgroundColor: 'white'},
-    {key: '10', backgroundColor: 'white'},
-    {key: '11', backgroundColor: 'white'},
-    {key: '12', backgroundColor: 'white'},
+    {key: '1', backgroundColor: 'white', type: 'tree'},
+    {key: '2', backgroundColor: 'white', type: 'flower'},
+    {key: '3', backgroundColor: 'white', type: 'tree'},
+    {key: '4', backgroundColor: 'white', type: 'flower'},
+    {key: '5', backgroundColor: 'white', type: 'tree'},
+    {key: '6', backgroundColor: 'white', type: 'flower'},
+    {key: '7', backgroundColor: 'white', type: 'tree'},
+    {key: '8', backgroundColor: 'white', type: 'flower'},
+    {key: '9', backgroundColor: 'white', type: 'tree'},
+    {key: '10', backgroundColor: 'white', type: 'flower'},
+    {key: '11', backgroundColor: 'white', type: 'tree'},
+    {key: '12', backgroundColor: 'white', type: 'flower'},
     // Add more data items as needed
   ];
 
@@ -36,7 +38,8 @@ const Discover = () => {
         margin: '1.7%', // Add spacing between rows
         borderRadius: 20,
         padding: 5,
-      }}>
+      }}
+      onPress={() => navigation.navigate('MoreInfo', {type: item.type})}>
       <Image
         source={require('../assets/test.png')}
         style={{width: '100%', height: '100%', borderRadius: 15}}

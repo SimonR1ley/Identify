@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import React from 'react';
 
-const MoreInfo = () => {
+const MoreInfo = ({route}) => {
+  const {type} = route.params;
+
+  console.log(type);
   return (
     <SafeAreaView
       style={{
@@ -24,6 +27,7 @@ const MoreInfo = () => {
           display: 'flex',
           alignItems: 'center',
         }}>
+        {/* <Text>{type}</Text> */}
         <ScrollView style={{width: '100%'}}>
           <View
             style={{
@@ -37,7 +41,7 @@ const MoreInfo = () => {
               flexDirection: 'row',
             }}>
             <Image
-              source={require('../assets/tree.png')}
+              source={require('../assets/flower.png')}
               style={{
                 width: '90%',
                 height: '100%',

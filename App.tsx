@@ -12,22 +12,23 @@ import Discover from './screens/Discover';
 import Profile from './screens/Profile';
 import MoreInfo from './screens/MoreInfo';
 
+const AuthStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AuthScreen = () => {
   return (
-    <Stack.Navigator
+    <AuthStack.Navigator
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
         animation: 'none',
       }}>
       {/* <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
-      <Stack.Screen name="Login" component={Login} />
+      <AuthStack.Screen name="Login" component={Login} />
       {/* <Stack.Screen name="Match" component={Match} /> */}
-      <Stack.Screen name="Signup" component={Signup} />
-    </Stack.Navigator>
+      <AuthStack.Screen name="Signup" component={Signup} />
+    </AuthStack.Navigator>
   );
 };
 
@@ -40,9 +41,7 @@ const StackScreen = () => {
         animation: 'none',
       }}>
       {/* <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
-      <Stack.Screen name="Login" component={Login} />
-      {/* <Stack.Screen name="Match" component={Match} /> */}
-      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="MoreInfo" component={MoreInfo} />
     </Stack.Navigator>
   );
 };
@@ -150,6 +149,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {!profileSetupCompleted ? <AuthScreen /> : <TabScreen />}
+      <Stack.Screen name="MoreInfo" component={MoreInfo} />
     </NavigationContainer>
   );
 };
