@@ -57,7 +57,7 @@ const TabScreen = () => {
         headerShown: false,
         tabBarInactiveTintColor: 'green',
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Discover"
         component={Discover}
         options={{
@@ -71,7 +71,24 @@ const TabScreen = () => {
             />
           ),
         }}
+      /> */}
+
+      <Tab.Screen
+        name="Match"
+        component={MoreInfo}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarShowLabel: false,
+          // showLabel: false,
+          tabBarIcon: () => (
+            <Image
+              source={require('./assets/discover.png')}
+              style={{width: 28, height: 28, marginTop: 15}}
+            />
+          ),
+        }}
       />
+
       <Tab.Screen
         name="CameraScreen"
         component={CameraScreen}
@@ -82,7 +99,7 @@ const TabScreen = () => {
           tabBarIcon: () => (
             <Image
               source={require('./assets/camera.png')}
-              style={{width: 40, height: 40, marginTop: 15}}
+              style={{width: 33, height: 33, marginTop: 15}}
             />
           ),
         }}
@@ -90,21 +107,6 @@ const TabScreen = () => {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/profile.png')}
-              style={{width: 28, height: 28, marginTop: 15}}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="MoreInfo"
-        component={MoreInfo}
         options={{
           tabBarLabel: 'Home',
           tabBarShowLabel: false,

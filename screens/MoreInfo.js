@@ -5,156 +5,125 @@ import {
   View,
   ScrollView,
   Image,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 
 const MoreInfo = ({route}) => {
-  const {type} = route.params;
+  // const {type} = route.params;
 
-  console.log(type);
+  const data = [
+    {key: '1', backgroundColor: 'white', type: 'tree'},
+    {key: '2', backgroundColor: 'white', type: 'flower'},
+    {key: '3', backgroundColor: 'white', type: 'tree'},
+    {key: '4', backgroundColor: 'white', type: 'flower'},
+    {key: '5', backgroundColor: 'white', type: 'tree'},
+    {key: '6', backgroundColor: 'white', type: 'flower'},
+    {key: '7', backgroundColor: 'white', type: 'tree'},
+    {key: '8', backgroundColor: 'white', type: 'flower'},
+    {key: '9', backgroundColor: 'white', type: 'tree'},
+    {key: '10', backgroundColor: 'white', type: 'flower'},
+    {key: '11', backgroundColor: 'white', type: 'tree'},
+    {key: '12', backgroundColor: 'white', type: 'flower'},
+    // Add more data items as needed
+  ];
+
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      style={{
+        width: '30%', // Set width to 33.33% to fit 3 items in a row
+        height: 120,
+        backgroundColor: item.backgroundColor,
+        margin: '1.7%', // Add spacing between rows
+        borderRadius: 20,
+        padding: 5,
+      }}
+      onPress={() => navigation.navigate('MoreInfo', {type: item.type})}>
+      <Image
+        source={require('../assets/test.png')}
+        style={{width: '100%', height: '100%', borderRadius: 15}}
+      />
+    </TouchableOpacity>
+  );
+
+  // console.log(type);
   return (
     <SafeAreaView
       style={{
         display: 'flex',
+        height: '100%',
         alignItems: 'center',
-        backgroundColor: '#207747',
+        backgroundColor: 'white',
       }}>
       <View
         style={{
-          width: '100%',
-          height: '100%',
-          //   backgroundColor: 'green',
+          width: '95%',
+          height: 50,
+          // backgroundColor: 'blue',
           display: 'flex',
+          justifyContent: 'center',
           alignItems: 'center',
+          flexDirection: 'row',
         }}>
-        {/* <Text>{type}</Text> */}
-        <ScrollView style={{width: '100%'}}>
-          <View
-            style={{
-              width: '100%',
-              height: 450,
-              //   backgroundColor: 'red',
-              alignSelf: 'center',
-              bottom: -35,
-              zIndex: 2,
-              display: 'flex',
-              flexDirection: 'row',
-            }}>
-            <Image
-              source={require('../assets/flower.png')}
-              style={{
-                width: '90%',
-                height: '100%',
-                left: -130,
-                borderRadius: 30,
-                position: 'absolute',
-                bottom: 0,
-              }}
-            />
-            <View
-              style={{
-                width: '50%',
-                height: '100%',
-                // backgroundColor: 'red',
-                position: 'absolute',
-                right: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                gap: 50,
-              }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Size: Large
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Location: Everywhere
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Oak Tree
-              </Text>
-            </View>
-            <View
-              style={{
-                width: '100%',
-                height: 50,
-                // backgroundColor: 'red',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  fontSize: 28,
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Oak Tree
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              width: '95%',
-              height: 'auto',
-              backgroundColor: 'white',
-              alignSelf: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 40,
-              padding: 20,
-            }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: '600',
-                // marginTop: 20,
-                alignSelf: 'center',
-              }}>
-              About
-            </Text>
-
-            <Text
-              style={{
-                fontSize: 16,
-                // fontWeight: '600',
-                marginTop: 20,
-                alignSelf: 'center',
-              }}>
-              There are approximately 600 different species of oak trees found
-              around the world. Some of the most common oak species...
-            </Text>
-
-            <Image
-              source={require('../assets/test.png')}
-              style={{
-                width: '100%',
-                height: 350,
-                borderRadius: 20,
-                marginTop: 20,
-              }}
-            />
-          </View>
-        </ScrollView>
+        <Image
+          source={require('../assets/return.png')}
+          style={{width: 30, height: 30, position: 'absolute', left: 0}}
+        />
+        <Text
+          style={{
+            // position: 'absolute',
+            alignSelf: 'center',
+            textAlign: 'center',
+            fontSize: 20,
+            fontWeight: '600',
+          }}>
+          Matches
+        </Text>
       </View>
+      <ScrollView style={{width: '100%', height: '100%'}}>
+        <View
+          style={{
+            width: '95%',
+            height: 400,
+            backgroundColor: 'blue',
+            alignSelf: 'center',
+            marginTop: 10,
+            borderRadius: 30,
+          }}></View>
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: 'center',
+            marginTop: 20,
+            fontWeight: '700',
+          }}>
+          Match Name
+        </Text>
+
+        <Text
+          style={{
+            fontSize: 17,
+            textAlign: 'flex-start',
+            marginTop: 20,
+            fontWeight: '500',
+            marginLeft: 10,
+            color: '#7D7D7D',
+          }}>
+          Other Images
+        </Text>
+
+        <FlatList
+          style={{
+            width: '100%',
+            height: '85%',
+            // backgroundColor: 'red',
+          }}
+          data={data}
+          renderItem={renderItem}
+          numColumns={3} // Set the number of columns to 3 for the grid
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
