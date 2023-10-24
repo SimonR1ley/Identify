@@ -12,7 +12,7 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-
+import {signinUser} from '../firebase/firebaseAuth';
 import {useState} from 'react';
 
 const Login = () => {
@@ -22,32 +22,33 @@ const Login = () => {
 
   const navigation = useNavigation();
 
-  // const logOn = async () => {
-  //   setLoading(true);
+  const logOn = async () => {
+    setLoading(true);
 
-  //   if (!email || !password) {
-  //     Alert.alert('Try Again', 'please fill in your email and password', [
-  //       {
-  //         text: 'Try Again',
-  //         onPress: () => {
-  //           setLoading(false);
-  //         },
-  //       },
-  //     ]);
-  //   } else {
-  //     await signinUser(email, password);
-  //     setLoading(false);
-  //     navigation.navigate('Feed');
-  //   }
-  // };
-
-  const LoginUser = async () => {
-    await AsyncStorage.setItem('profileSetupStatus', 'completed').then(
-      async () => {
-        navigation.navigate('CameraScreen');
-      },
-    );
+    if (!email || !password) {
+      Alert.alert('Try Again', 'please fill in your email and password', [
+        {
+          text: 'Try Again',
+          onPress: () => {
+            setLoading(false);
+          },
+        },
+      ]);
+    } else {
+      await signinUser(email, password);
+      setLoading(false);
+      navigation.navigate('CameraScreen');
+      console.log('Successfully signed in!!!');
+    }
   };
+
+  // const LoginUser = async () => {
+  //   await AsyncStorage.setItem('profileSetupStatus', 'completed').then(
+  //     async () => {
+  //       navigation.navigate('CameraScreen');
+  //     },
+  //   );
+  // };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
@@ -129,8 +130,7 @@ const Login = () => {
                 height: 50,
               }}
               onPress={() => {
-                LoginUser();
-                navigation.navigate('Login');
+                // navigation.navigate('Login');
               }}
             />
 
@@ -146,7 +146,10 @@ const Login = () => {
                 marginTop: 20,
                 marginBottom: 10,
               }}
-              onPress={() => navigation.navigate('CameraScreen')}>
+              onPress={() => {
+                // navigation.navigate('CameraScreen');
+                logOn();
+              }}>
               <Text style={{color: 'white', fontWeight: '700', fontSize: 17}}>
                 Login
               </Text>

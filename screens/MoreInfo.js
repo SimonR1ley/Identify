@@ -86,7 +86,7 @@ const MoreInfo = ({route}) => {
           style={{
             width: '95%',
             height: 400,
-            backgroundColor: 'blue',
+            backgroundColor: 'grey',
             alignSelf: 'center',
             marginTop: 10,
             borderRadius: 30,
@@ -104,7 +104,7 @@ const MoreInfo = ({route}) => {
         <Text
           style={{
             fontSize: 17,
-            textAlign: 'flex-start',
+            textAlign: 'left',
             marginTop: 20,
             fontWeight: '500',
             marginLeft: 10,

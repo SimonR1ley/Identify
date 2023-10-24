@@ -11,6 +11,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Discover from './screens/Discover';
 import Profile from './screens/Profile';
 import MoreInfo from './screens/MoreInfo';
+import Chat from './screens/Chat';
+import auth from '@react-native-firebase/auth';
+import {useRoute} from '@react-navigation/native';
 
 const AuthStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -90,6 +93,23 @@ const TabScreen = () => {
       />
 
       <Tab.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          tabBarLabel: 'Chat',
+          tabBarShowLabel: false,
+          // showLabel: false,
+          tabBarIcon: () => (
+            <Image
+              source={require('./assets/message.png')}
+              style={{width: 28, height: 28, marginTop: 15}}
+            />
+          ),
+          tabBarStyle: {display: 'none'},
+        }}
+      />
+
+      <Tab.Screen
         name="CameraScreen"
         component={CameraScreen}
         options={{
@@ -124,34 +144,43 @@ const TabScreen = () => {
 };
 
 const App = () => {
-  const [profileSetupCompleted, setProfileSetupCompleted] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false); //variable to view screens for auth
+  const [routeName, setRouteName] = useState('');
 
-  // useEffect(() => {
-  //   checkUser();
-  // }, []);
+  useEffect(() => {
+    checkUser();
+  }, []);
 
-  // const checkUser = async () => {
-  //   try {
-  //     console.log('Profile Status', profileSetupCompleted);
-
-  //     const profileSetupStatus = await AsyncStorage.getItem(
-  //       'profileSetupStatus',
-  //     );
-  //     if (profileSetupStatus === 'completed') {
-  //       setProfileSetupCompleted(true);
-  //     } else {
-  //       setProfileSetupCompleted(false);
-  //       // Navigate to ProfileSetup screen if the profile setup is not completed
-  //     }
-  //   } catch (error) {
-  //     console.error('Error retrieving profile setup status:', error);
-  //   }
-  // };
+  const checkUser = async () => {
+    auth().onAuthStateChanged(async user => {
+      console.log('checking if logged In...');
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+  };
 
   return (
-    <NavigationContainer>
-      {!profileSetupCompleted ? <AuthScreen /> : <TabScreen />}
-      <Stack.Screen name="MoreInfo" component={MoreInfo} />
+    <NavigationContainer
+      onStateChange={state => {
+        // @ts-ignore
+        console.log('State', state?.routes[state.index].name);
+
+        const currentRoute = state?.routes[state.index].name;
+        // setRouteName(currentRoute);
+      }}>
+      {!loggedIn ? (
+        <AuthScreen />
+      ) : (
+        <>
+          {routeName !== 'Chat' && (
+            // routeName !== 'ProfileUpdate'
+            <TabScreen />
+          )}
+        </>
+      )}
     </NavigationContainer>
   );
 };

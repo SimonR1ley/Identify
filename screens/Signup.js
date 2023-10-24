@@ -10,57 +10,62 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-// import { ButtonBlue } from "../components/ButtonBlue";
+import {registerNewUser, updateAuthProfile} from '../firebase/firebaseAuth';
 
 import {useNavigation} from '@react-navigation/native';
 
 import {useState} from 'react';
-
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../config/firebase";
-// import { registerNewUser } from "../sevices/firebaseAuth";
 
 const Signup = () => {
   const navigation = useNavigation();
 
   const [loading, setLoading] = useState(false);
 
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordCon, setPasswordCon] = useState('');
   const [username, setUsername] = useState('');
+  const [passwordConVal, setPasswordConVal] = useState('');
 
-  // const registerUser = async () => {
-  //   if (password != passwordCon) {
-  //     Alert.alert("Try Again", "Passwords do not match.", [
-  //       {
-  //         text: "Try Again",
-  //         onPress: () => {
-  //           setLoading(false);
-  //         },
-  //       },
-  //     ]);
-  //   } else if (!email || !password || !username || !passwordCon) {
-  //     Alert.alert("Try Again", "please fill in all your information.", [
-  //       {
-  //         text: "Try Again",
-  //         onPress: () => {
-  //           setLoading(false);
-  //         },
-  //       },
-  //     ]);
-  //   } else {
-  //     console.log("Registering");
-  //     setLoading(true);
-  //     await registerNewUser(username, email, password).then(() => {
-  //       setLoading(false);
-  //       navigation.navigate("Login");
-  //     });
-  //   }
-  // };
-
-  // console.log(auth.currentUser.email);
-
+  const registerUser = async () => {
+    console.log('Registering');
+    if (password != passwordConVal) {
+      Alert.alert('Try Again', 'Passwords do not match.', [
+        {
+          text: 'Try Again',
+          onPress: () => {
+            setLoading(false);
+          },
+        },
+      ]);
+    } else if (
+      !name ||
+      !surname ||
+      !username ||
+      !email ||
+      !password ||
+      !passwordConVal
+    ) {
+      Alert.alert('Try Again', 'please fill in all your information.', [
+        {
+          text: 'Try Again',
+          onPress: () => {
+            setLoading(false);
+          },
+        },
+      ]);
+    } else {
+      setLoading(true);
+      await registerNewUser(email.toLowerCase(), password).then(async () => {
+        await updateAuthProfile(username);
+        // await AsyncStorage.setItem('profileSetupStatus', 'notCompleted');
+        // navigation.navigate('WelcomeScreen', {name, surname});
+        console.log('User Registerd!!!');
+        setLoading(false);
+      });
+    }
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       {!loading ? (
@@ -108,9 +113,9 @@ const Signup = () => {
                 textAlign: 'center',
                 color: 'white',
               }}
-              placeholder="Username"
+              placeholder="Name"
               placeholderTextColor="white"
-              onChangeText={newText => setUsername(newText)}
+              onChangeText={newText => setName(newText)}
             />
 
             <TextInput
@@ -124,7 +129,21 @@ const Signup = () => {
               }}
               placeholder="Surname"
               placeholderTextColor="white"
-              // onChangeText={(newText) => setSurname(newText)}
+              onChangeText={newText => setSurname(newText)}
+            />
+
+            <TextInput
+              style={{
+                width: '90%',
+                height: 50,
+                backgroundColor: '#2A2D2E',
+                borderRadius: 10,
+                textAlign: 'center',
+                color: 'white',
+              }}
+              placeholder="Username"
+              placeholderTextColor="white"
+              onChangeText={newText => setUsername(newText)}
             />
 
             <TextInput
@@ -168,7 +187,7 @@ const Signup = () => {
               }}
               placeholder="Confirm Password"
               placeholderTextColor="white"
-              onChangeText={newText => setPasswordCon(newText)}
+              onChangeText={newText => setPasswordConVal(newText)}
             />
           </View>
 
@@ -187,8 +206,7 @@ const Signup = () => {
                 marginTop: 20,
                 marginBottom: 20,
               }}
-              // onPress={registerUser}
-            >
+              onPress={registerUser}>
               <Text style={{color: 'white', fontWeight: '700', fontSize: 17}}>
                 Signup
               </Text>
