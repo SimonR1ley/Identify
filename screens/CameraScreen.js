@@ -9,20 +9,41 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraDevices,
+} from 'react-native-vision-camera';
+
+const RESULT_MAPPING = [
+  'Bread',
+  'Meat',
+  'Seafood',
+  'Vegetable-Fruit',
+  'Dairy product',
+  'Dessert',
+  'Egg',
+  'Fried food',
+  'Noodles-Pasta',
+  'Rice',
+  'Soup',
+];
 
 function CameraScreen() {
-  const camera = useRef(null);
-  const devices = useCameraDevices();
-  const device = devices.back;
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [presentedFood, setPresentedFood] = useState('');
 
-  const [showCamera, setShowCamera] = useState(false);
+  const camera = useRef(null);
+  const device = useCameraDevice('back');
+
+  const [showCamera, setShowCamera] = useState(true);
   const [imageSource, setImageSource] = useState('');
 
   useEffect(() => {
     async function getPermission() {
-      const newCameraPermission = await Camera.requestCameraPermission();
-      console.log(newCameraPermission);
+      const permission = await Camera.requestCameraPermission();
+      console.log('Camera permission status: ', permission);
+      if (permission === 'denied') await Linking.openSettings();
     }
     getPermission();
   }, []);
@@ -109,16 +130,16 @@ function CameraScreen() {
                   alignItems: 'center',
                   borderRadius: 10,
                   borderWidth: 2,
-                  borderColor: '#77c3ec',
+                  borderColor: '#207747',
                 }}
                 onPress={() => setShowCamera(true)}>
-                <Text style={{color: '#77c3ec', fontWeight: '500'}}>
+                <Text style={{color: '#207747', fontWeight: '500'}}>
                   Retake
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  backgroundColor: '#77c3ec',
+                  backgroundColor: '#207747',
                   padding: 10,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -175,7 +196,7 @@ const styles = StyleSheet.create({
     width: 80,
     borderRadius: 40,
     //ADD backgroundColor COLOR GREY
-    backgroundColor: '#B2BEB5',
+    backgroundColor: '#207747',
 
     alignSelf: 'center',
     borderWidth: 4,

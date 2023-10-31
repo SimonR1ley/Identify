@@ -76,7 +76,7 @@ const TabScreen = () => {
         }}
       /> */}
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Match"
         component={MoreInfo}
         options={{
@@ -87,6 +87,21 @@ const TabScreen = () => {
             <Image
               source={require('./assets/discover.png')}
               style={{width: 28, height: 28, marginTop: 15}}
+            />
+          ),
+        }}
+      /> */}
+      <Tab.Screen
+        name="CameraScreen"
+        component={CameraScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarShowLabel: false,
+          // showLabel: false,
+          tabBarIcon: () => (
+            <Image
+              source={require('./assets/camera.png')}
+              style={{width: 33, height: 33, marginTop: 15}}
             />
           ),
         }}
@@ -109,21 +124,6 @@ const TabScreen = () => {
         }}
       />
 
-      <Tab.Screen
-        name="CameraScreen"
-        component={CameraScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/camera.png')}
-              style={{width: 33, height: 33, marginTop: 15}}
-            />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -163,14 +163,7 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer
-      onStateChange={state => {
-        // @ts-ignore
-        console.log('State', state?.routes[state.index].name);
-
-        const currentRoute = state?.routes[state.index].name;
-        // setRouteName(currentRoute);
-      }}>
+    <NavigationContainer>
       {!loggedIn ? (
         <AuthScreen />
       ) : (

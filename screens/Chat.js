@@ -27,7 +27,7 @@ const Chat = ({route}) => {
   const getAllMessages = async () => {
     const messages = await getAllMessagesFromCollection();
     setMessages(messages);
-    console.log(messages);
+    // console.log(messages);
   };
 
   useEffect(() => {

@@ -3,19 +3,13 @@ import React from 'react';
 import {getCurrentUser} from '../firebase/firebaseAuth';
 
 const ChatMessage = ({data}) => {
-  console.log('This is from message', data.userId);
   const user = getCurrentUser();
-
-  console.log(user.displayName);
-
   return (
     <>
       {data.userId != user.uid ? (
         <View
           style={{
             maxWidth: '60%',
-            // height: 40,
-            // backgroundColor: 'green',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
             borderRadius: 20,
