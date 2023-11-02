@@ -10,10 +10,13 @@ import CameraScreen from './screens/CameraScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Discover from './screens/Discover';
 import Profile from './screens/Profile';
-import MoreInfo from './screens/MoreInfo';
+import MoreInfo from './screens/Matches';
 import Chat from './screens/Chat';
 import auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
+import Onboarding from './screens/Onboarding';
+import {ScreenStack} from 'react-native-screens';
+import Matches from './screens/Matches';
 
 const AuthStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -44,104 +47,109 @@ const StackScreen = () => {
         animation: 'none',
       }}>
       {/* <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
-      <Stack.Screen name="MoreInfo" component={MoreInfo} />
+      <Stack.Screen name="CameraScreen" component={CameraScreen} />
+      <Stack.Screen name="Onbarding" component={Onboarding} />
+      <Stack.Screen name="Matches" component={Matches} />
+      <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Match" component={Match} />
     </Stack.Navigator>
   );
 };
 
-const TabScreen = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: '#207747',
-        },
-        tabBarActiveTintColor: 'red',
-        headerShown: false,
-        tabBarInactiveTintColor: 'green',
-      }}>
-      {/* <Tab.Screen
-        name="Discover"
-        component={Discover}
-        options={{
-          tabBarLabel: 'Discover',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/discover.png')}
-              style={{width: 30, height: 30, marginTop: 15}}
-            />
-          ),
-        }}
-      /> */}
+// const TabScreen = () => {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={{
+//         tabBarStyle: {
+//           backgroundColor: '#207747',
+//         },
+//         tabBarActiveTintColor: 'red',
+//         headerShown: false,
+//         tabBarInactiveTintColor: 'green',
+//       }}>
+//       {/* <Tab.Screen
+//         name="Discover"
+//         component={Discover}
+//         options={{
+//           tabBarLabel: 'Discover',
+//           tabBarShowLabel: false,
+//           // showLabel: false,
+//           tabBarIcon: () => (
+//             <Image
+//               source={require('./assets/discover.png')}
+//               style={{width: 30, height: 30, marginTop: 15}}
+//             />
+//           ),
+//         }}
+//       /> */}
 
-      {/* <Tab.Screen
-        name="Match"
-        component={MoreInfo}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/discover.png')}
-              style={{width: 28, height: 28, marginTop: 15}}
-            />
-          ),
-        }}
-      /> */}
-      <Tab.Screen
-        name="CameraScreen"
-        component={CameraScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/camera.png')}
-              style={{width: 33, height: 33, marginTop: 15}}
-            />
-          ),
-        }}
-      />
+//       {/* <Tab.Screen
+//         name="Match"
+//         component={MoreInfo}
+//         options={{
+//           tabBarLabel: 'Home',
+//           tabBarShowLabel: false,
+//           // showLabel: false,
+//           tabBarIcon: () => (
+//             <Image
+//               source={require('./assets/discover.png')}
+//               style={{width: 28, height: 28, marginTop: 15}}
+//             />
+//           ),
+//         }}
+//       /> */}
+//       <Tab.Screen
+//         name="CameraScreen"
+//         component={CameraScreen}
+//         options={{
+//           tabBarLabel: 'Home',
+//           tabBarShowLabel: false,
+//           // showLabel: false,
+//           tabBarIcon: () => (
+//             <Image
+//               source={require('./assets/camera.png')}
+//               style={{width: 33, height: 33, marginTop: 15}}
+//             />
+//           ),
+//         }}
+//       />
 
-      <Tab.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          tabBarLabel: 'Chat',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/message.png')}
-              style={{width: 28, height: 28, marginTop: 15}}
-            />
-          ),
-          tabBarStyle: {display: 'none'},
-        }}
-      />
+//       <Tab.Screen
+//         name="Chat"
+//         component={Chat}
+//         options={{
+//           tabBarLabel: 'Chat',
+//           tabBarShowLabel: false,
+//           // showLabel: false,
+//           tabBarIcon: () => (
+//             <Image
+//               source={require('./assets/message.png')}
+//               style={{width: 28, height: 28, marginTop: 15}}
+//             />
+//           ),
+//           tabBarStyle: {display: 'none'},
+//         }}
+//       />
 
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarShowLabel: false,
-          // showLabel: false,
-          tabBarIcon: () => (
-            <Image
-              source={require('./assets/profile.png')}
-              style={{width: 28, height: 28, marginTop: 15}}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
+//       <Tab.Screen
+//         name="Profile"
+//         component={Profile}
+//         options={{
+//           tabBarLabel: 'Home',
+//           tabBarShowLabel: false,
+//           // showLabel: false,
+//           tabBarIcon: () => (
+//             <Image
+//               source={require('./assets/profile.png')}
+//               style={{width: 28, height: 28, marginTop: 15}}
+//             />
+//           ),
+//         }}
+//       />
+//     </Tab.Navigator>
+//   );
+// };
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false); //variable to view screens for auth
@@ -167,12 +175,13 @@ const App = () => {
       {!loggedIn ? (
         <AuthScreen />
       ) : (
-        <>
-          {routeName !== 'Chat' && (
-            // routeName !== 'ProfileUpdate'
-            <TabScreen />
-          )}
-        </>
+        <StackScreen />
+        // <>
+        //   {routeName !== 'Chat' && (
+        //     // routeName !== 'ProfileUpdate'
+        //     <TabScreen />
+        //   )}
+        // </>
       )}
     </NavigationContainer>
   );

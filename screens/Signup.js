@@ -219,7 +219,7 @@ const Signup = () => {
                 width: 100,
                 height: 50,
               }}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Onbarding')}
             />
           </View>
         </>

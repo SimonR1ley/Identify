@@ -35,8 +35,9 @@ const Login = () => {
         },
       ]);
     } else {
-      await signinUser(email, password);
-      setLoading(false);
+      await signinUser(email, password).then(() => {
+        setLoading(false);
+      });
       navigation.navigate('CameraScreen');
       console.log('Successfully signed in!!!');
     }
@@ -173,6 +174,7 @@ const Login = () => {
             height: '100%',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: '#2FA05E',
           }}>
           <Text style={{color: 'white', textAlign: 'center'}}>Loading</Text>
           <ActivityIndicator animating={loading} size={40} />
