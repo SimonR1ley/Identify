@@ -77,23 +77,57 @@ function CameraScreen() {
     }
   };
 
-  const UseImage = () => {
+  const sendImageToFastAPI = async imageUri => {
+    try {
+      const formData = new FormData();
+      formData.append('file', {
+        uri: imageUri,
+        type: 'image/jpeg', // Replace with the actual image type
+        name: 'image.jpg',
+        msg: 'test',
+      });
+
+      const response = await axios.post(
+        'http://192.168.30.36:3000/api/post',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      // const response = await axios.get('http://192.168.30.36:3000/');
+      // Handle the response from the FastAPI backend here
+      console.log('Response:', response.data.predicted_class);
+
+      await UseImage(response.data.predicted_class);
+    } catch (error) {
+      console.error('Error:', error);
+      console.info(error);
+    }
+  };
+
+  const UseImage = img => {
     console.log('Using');
-    setAnalysing(false);
-    // axios
-    //   .get(
-    //     'https://api.edamam.com/api/food-database/v2/parser?ingr=steak&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e',
-    //     // `https://api.edamam.com/api/food-database/v2/parser?ingr=pizza&app_id=${APP_ID}&app_key=${API_KEY}`,
-    //   )
-    //   .then(response => {
-    //     // Handle the recipe data here
-    //     console.log(response.data);
-    //     setAnalysing(false);
-    //   })
-    //   .catch(error => {
-    //     // Handle any errors
-    //     console.error(error);
-    //   });
+    setAnalysing(true);
+    sendImageToFastAPI(imageSource);
+    axios
+      .get(
+        'https://api.edamam.com/api/food-database/v2/parser?ingr=' +
+          img +
+          '&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e',
+        // `https://api.edamam.com/api/food-database/v2/parser?ingr=pizza&app_id=${APP_ID}&app_key=${API_KEY}`,
+      )
+      .then(response => {
+        // Handle the recipe data here
+        console.log(response.data);
+        setAnalysing(false);
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error(error);
+      });
   };
 
   if (device == null) {
@@ -383,7 +417,7 @@ function CameraScreen() {
                   onPress={() => {
                     // setShowCamera(true);
                     setUsePicture(true);
-                    UseImage();
+                    // UseImage();
                   }}>
                   <Text style={{color: 'white', fontWeight: '500'}}>
                     Use Photo
