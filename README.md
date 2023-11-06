@@ -25,7 +25,7 @@ Before running the **Identify** app, make sure you have the following prerequisi
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/SimonR1ley/Identify.git
+   git clone https://github.com/SimonR1ley/Identify
 
    ```
 
