@@ -2,8 +2,7 @@
 
 **Identify** is a React Native mobile application that harnesses the power of AI and food data to help users identify and gain insights into various food items. With the integration of Clarify's AI model for food detection and the EDAMAM API for nutritional information, this app is your go-to solution for making informed dietary choices.
 
-<!-- ![Identify App Screenshot](./assets/indentify.jpg) -->
-<img src="./assets/identify.jpg" width="200" height="200">
+![Identify App Screenshot](./assets/indentify.jpg){width: 200px}
 
 ## Features
 
