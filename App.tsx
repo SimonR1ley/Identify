@@ -17,6 +17,7 @@ import {useRoute} from '@react-navigation/native';
 import Onboarding from './screens/Onboarding';
 import {ScreenStack} from 'react-native-screens';
 import Matches from './screens/Matches';
+import ProfilePicture from './screens/ProfilePicture';
 
 const AuthStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -48,11 +49,12 @@ const StackScreen = () => {
       }}>
       {/* <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
-      <Stack.Screen name="Onbarding" component={Onboarding} />
       <Stack.Screen name="Matches" component={Matches} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Match" component={Match} />
+      <Stack.Screen name="Onbarding" component={Onboarding} />
+      <Stack.Screen name="ProfilePicture" component={ProfilePicture} />
     </Stack.Navigator>
   );
 };

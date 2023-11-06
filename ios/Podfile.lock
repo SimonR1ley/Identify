@@ -1081,7 +1081,7 @@ PODS:
   - React-jsinspector (0.72.5)
   - React-logger (0.72.5):
     - glog
-  - react-native-safe-area-context (4.7.2):
+  - react-native-safe-area-context (4.7.4):
     - React-Core
   - React-NativeModulesApple (0.72.5):
     - hermes-engine
@@ -1194,28 +1194,38 @@ PODS:
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
   - RecaptchaInterop (100.0.0)
-  - RNCAsyncStorage (1.19.3):
+  - RNCAsyncStorage (1.19.4):
     - React-Core
-  - RNFBApp (18.5.0):
+  - RNFBApp (18.6.1):
     - Firebase/CoreOnly (= 10.15.0)
     - React-Core
-  - RNFBAuth (18.5.0):
+  - RNFBAuth (18.6.1):
     - Firebase/Auth (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (18.5.0):
+  - RNFBFirestore (18.6.1):
     - Firebase/Firestore (= 10.15.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (18.5.0):
+  - RNFBStorage (18.6.1):
     - Firebase/Storage (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNScreens (3.25.0):
+  - RNImageCropPicker (0.40.1):
     - React-Core
     - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.40.1)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.40.1):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
+  - RNScreens (3.27.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - SocketRocket (0.6.1)
+  - TOCropViewController (2.6.1)
   - VisionCamera (3.6.4):
     - React
     - React-callinvoker
@@ -1269,6 +1279,7 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -1297,6 +1308,7 @@ SPEC REPOS:
     - PromisesObjC
     - RecaptchaInterop
     - SocketRocket
+    - TOCropViewController
 
 EXTERNAL SOURCES:
   boost:
@@ -1388,6 +1400,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   VisionCamera:
@@ -1437,7 +1451,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: ff70a72027dea5cc7d71cfcc6fad7f599f63987a
   React-jsinspector: aef73cbd43b70675f572214d10fa438c89bf11ba
   React-logger: 2e4aee3e11b3ec4fa6cfd8004610bbb3b8d6cca4
-  react-native-safe-area-context: 7aa8e6d9d0f3100a820efb1a98af68aa747f9284
+  react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
   React-NativeModulesApple: 54adc761c7a6fa5f183ca62ad0cb94f4f1cdce4a
   React-perflogger: cd8886513f68e1c135a1e79d20575c6489641597
   React-RCTActionSheet: 726d2615ca62a77ce3e2c13d87f65379cdc73498
@@ -1456,13 +1470,15 @@ SPEC CHECKSUMS:
   React-utils: 40cdd9acee23230df5b78bf78a64ce8a2084c2d0
   ReactCommon: 4ec7cc40d091eed0a510755619940b6a03cb507b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RNCAsyncStorage: c913ede1fa163a71cea118ed4670bbaaa4b511bb
-  RNFBApp: 082df9f8ffba99f23f7aee3ecb64df703e7e1adb
-  RNFBAuth: b055663339aef8ce9d63cd5d03e2ea5360a3aca2
-  RNFBFirestore: a9837bc0c4d0911ade436787e995fa20a12a77b0
-  RNFBStorage: aa0d6ac695aff1841f2b87285bb90ed6271d37d9
-  RNScreens: 85d3880b52d34db7b8eeebe2f1a0e807c05e69fa
+  RNCAsyncStorage: 3a8f7145d17cdd9f88e7b77666c94a09e4f759c8
+  RNFBApp: ecd694cfb38342d546712f5a02abf2b961d09166
+  RNFBAuth: 571f85f1df9200ecdf16776293169b6fe42f8f4a
+  RNFBFirestore: 7bbcf9f0e51df9a5e118e5b9d9865fe7db938651
+  RNFBStorage: 6831bb4eec5f1948d0a1790015ece4ba865f0dc2
+  RNImageCropPicker: 521d8ef2dcf0549f141dbf82d086c75e3a9fbe65
+  RNScreens: 3e56c56bd35436215a56f48a753e30e8ce018a09
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   VisionCamera: 1910a51e4c6f6b049650086d343090f267b4c260
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
 

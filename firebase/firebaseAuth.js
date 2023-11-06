@@ -37,7 +37,8 @@ export const signinUser = async (email, password) => {
       const errorMessage = error.message;
 
       console.log(errorCode + ': ' + errorMessage);
-      Alert.alert('Oops!', [
+
+      Alert.alert('Error!', 'Wrong email or password! Please try again.', [
         {
           text: 'Try again',
           onPress: () => {},
@@ -67,6 +68,20 @@ export const updateAuthProfile = async (username, imageUrl) => {
   try {
     await auth().currentUser.updateProfile({
       displayName: username,
+      photoURL: imageUrl,
+    });
+    console.log('Profile updated in Auth Successfully');
+    return true;
+  } catch (error) {
+    console.log('Something went wrong in Update Auth: ' + error);
+    return false;
+  }
+};
+
+export const updateImageProfile = async imageUrl => {
+  console.log('ImageURL: ' + imageUrl);
+  try {
+    await auth().currentUser.updateProfile({
       photoURL: imageUrl,
     });
     console.log('Profile updated in Auth Successfully');

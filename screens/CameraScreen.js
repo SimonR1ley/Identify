@@ -17,22 +17,11 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 
-import axios from 'axios';
-// import dotenv
+import ImagePicker from 'react-native-image-crop-picker';
 
-const RESULT_MAPPING = [
-  'Bread',
-  'Meat',
-  'Seafood',
-  'Vegetable-Fruit',
-  'Dairy product',
-  'Dessert',
-  'Egg',
-  'Fried food',
-  'Noodles-Pasta',
-  'Rice',
-  'Soup',
-];
+import axios from 'axios';
+import {addImageToCollection} from '../firebase/firebaseDb';
+// import dotenv
 
 function CameraScreen() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -52,9 +41,6 @@ function CameraScreen() {
 
   const [navigatIcon, setNavigateIcon] = useState(false);
 
-  const API_KEY = process.env.API_KEY;
-  const APP_ID = process.env.APP_ID;
-
   const toggleNavigation = () => {
     setNavigateIcon(!navigatIcon);
   };
@@ -63,7 +49,9 @@ function CameraScreen() {
     async function getPermission() {
       const permission = await Camera.requestCameraPermission();
       console.log('Camera permission status: ', permission);
-      if (permission === 'denied') await Linking.openSettings();
+      if (permission === 'denied') {
+        await Linking.openSettings();
+      }
     }
     getPermission();
   }, []);
@@ -77,57 +65,126 @@ function CameraScreen() {
     }
   };
 
-  const sendImageToFastAPI = async imageUri => {
-    try {
-      const formData = new FormData();
-      formData.append('file', {
-        uri: imageUri,
-        type: 'image/jpeg', // Replace with the actual image type
-        name: 'image.jpg',
-        msg: 'test',
-      });
-
-      const response = await axios.post(
-        'http://192.168.30.36:3000/api/post',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
-
-      // const response = await axios.get('http://192.168.30.36:3000/');
-      // Handle the response from the FastAPI backend here
-      console.log('Response:', response.data.predicted_class);
-
-      await UseImage(response.data.predicted_class);
-    } catch (error) {
-      console.error('Error:', error);
-      console.info(error);
-    }
+  const useImgLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      setImageSource(image.sourceURL);
+      setShowCamera(false);
+    });
   };
 
-  const UseImage = img => {
-    console.log('Using');
-    setAnalysing(true);
-    sendImageToFastAPI(imageSource);
-    axios
-      .get(
-        'https://api.edamam.com/api/food-database/v2/parser?ingr=' +
-          img +
-          '&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e',
-        // `https://api.edamam.com/api/food-database/v2/parser?ingr=pizza&app_id=${APP_ID}&app_key=${API_KEY}`,
-      )
-      .then(response => {
-        // Handle the recipe data here
-        console.log(response.data);
+  const [apiResponse, setApiResponse] = useState();
+
+  const sendImageToFastAPI = async imageUri => {
+    console.log('Sending Request');
+
+    console.log('From send Image', imageUri);
+    const PAT = '5946ff3c2eb24f90b4b3cc1bc020cdcc';
+    const USER_ID = 'clarifai';
+    const APP_ID = 'main';
+    const MODEL_ID = 'food-item-recognition';
+    const MODEL_VERSION_ID = '1d5fd481e0cf4826aa72ec3ff049e044';
+    const IMAGE_URL = imageUri;
+    const raw = JSON.stringify({
+      user_app_id: {
+        user_id: USER_ID,
+        app_id: APP_ID,
+      },
+      inputs: [
+        {
+          data: {
+            image: {
+              url: IMAGE_URL,
+            },
+          },
+        },
+      ],
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Key ' + PAT,
+      },
+      body: raw,
+    };
+    fetch(
+      'https://api.clarifai.com/v2/models/' +
+        MODEL_ID +
+        '/versions/' +
+        MODEL_VERSION_ID +
+        '/outputs',
+      requestOptions,
+    )
+      .then(response => response.text())
+      .then(result => {
+        console.log('pre-passed data :)', result);
+        let theData = JSON.parse(result);
+        console.log('The Data', theData.outputs[0].data.concepts[0].name);
+        setApiResponse(theData.outputs[0].data.concepts[0].name);
         setAnalysing(false);
       })
-      .catch(error => {
-        // Handle any errors
-        console.error(error);
-      });
+      .catch(error => console.log('error', error));
+
+    // try {
+    //   const formData = new FormData();
+    //   formData.append('file', {
+    //     uri: imageUri,
+    //     type: 'image/jpeg', // Replace with the actual image type
+    //     name: 'image.jpg',
+    //     msg: 'test',
+    //   });
+
+    //   const response = await axios.post(
+    //     'http://192.168.0.196:3000/api/predict',
+    //     formData,
+    //     {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    //     },
+    //   );
+
+    //   // const response = await axios.get('http://192.168.30.36:3000/');
+    //   // Handle the response from the FastAPI backend here
+    //   console.log('Response:', response.data.predicted_class);
+
+    //   if (response.data.predicted_class) {
+    //     setApiResponse(response.data.predicted_class);
+    //     setAnalysing(false);
+    //   }
+
+    //   // await UseImage(response.data.predicted_class);
+    // } catch (error) {
+    //   console.error('Error:', error);
+    //   console.info(error);
+    // }
+  };
+
+  const UseImage = async () => {
+    console.log('Using');
+    setAnalysing(true);
+
+    // NEED TO UPLOAD IMAGES TO FIREBASE HERE
+
+    // Call the addImageToCollection function and await the result
+    const imageURL = await addImageToCollection(imageSource);
+
+    if (imageURL) {
+      // Do something with the imageURL, e.g., send it to FastAPI
+      console.log('Image URL LETSSSS GOOOOOOO:', imageURL);
+      sendImageToFastAPI(imageURL);
+    } else {
+      // Handle the case where adding the image to the collection failed
+      console.error('Failed to add the image to the collection');
+    }
+
+    // sendImageToFastAPI(imageSource);
   };
 
   if (device == null) {
@@ -249,6 +306,9 @@ function CameraScreen() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+              }}
+              onPress={() => {
+                useImgLibrary();
               }}>
               <Image
                 source={require('../assets/gallery.png')}
@@ -267,7 +327,8 @@ function CameraScreen() {
                   height: 80,
                   backgroundColor: '#207747',
                   borderRadius: 100,
-                }}></View>
+                }}
+              />
             </TouchableOpacity>
           </View>
         </>
@@ -329,7 +390,7 @@ function CameraScreen() {
                     padding: 10,
                   }}
                   onPress={() => {
-                    navigation.navigate('Matches', {imageSource});
+                    navigation.navigate('Matches', {imageSource, apiResponse});
                   }}>
                   <Image
                     source={require('../assets/analyse.png')}
@@ -417,7 +478,7 @@ function CameraScreen() {
                   onPress={() => {
                     // setShowCamera(true);
                     setUsePicture(true);
-                    // UseImage();
+                    UseImage();
                   }}>
                   <Text style={{color: 'white', fontWeight: '500'}}>
                     Use Photo

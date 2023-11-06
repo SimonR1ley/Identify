@@ -92,7 +92,7 @@ const Match = ({route}) => {
               flexDirection: 'row',
               // gap: 10,
               marginBottom: 15,
-              backgroundColor: '#207747',
+              // backgroundColor: '#207747',
               padding: 10,
               borderRadius: 15,
             }}>
@@ -114,10 +114,6 @@ const Match = ({route}) => {
                 // backgroundColor: 'red',
                 gap: 10,
               }}>
-              <Image
-                source={require('../assets/carbohydrates.png')}
-                style={{width: 40, height: 40}}
-              />
               <Text
                 style={{
                   color: 'white',
@@ -126,6 +122,10 @@ const Match = ({route}) => {
                 }}>
                 {parseFloat(data.nutrients.CHOCDF).toFixed()}
               </Text>
+              <Image
+                source={require('../assets/carbohydrates.png')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
 
@@ -138,7 +138,7 @@ const Match = ({route}) => {
               flexDirection: 'row',
               gap: 10,
               marginBottom: 15,
-              backgroundColor: '#207747',
+              // backgroundColor: '#207747',
               padding: 10,
               borderRadius: 15,
             }}>
@@ -158,10 +158,6 @@ const Match = ({route}) => {
                 flexDirection: 'row',
                 gap: 10,
               }}>
-              <Image
-                source={require('../assets/energy.png')}
-                style={{width: 40, height: 40}}
-              />
               <Text
                 style={{
                   color: 'white',
@@ -170,6 +166,10 @@ const Match = ({route}) => {
                 }}>
                 {parseFloat(data.nutrients.ENERC_KCAL).toFixed()}
               </Text>
+              <Image
+                source={require('../assets/energy.png')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
 
@@ -182,7 +182,7 @@ const Match = ({route}) => {
               flexDirection: 'row',
               gap: 10,
               marginBottom: 15,
-              backgroundColor: '#207747',
+              // backgroundColor: '#207747',
               padding: 10,
               borderRadius: 15,
             }}>
@@ -202,10 +202,6 @@ const Match = ({route}) => {
                 flexDirection: 'row',
                 gap: 10,
               }}>
-              <Image
-                source={require('../assets/fat.png')}
-                style={{width: 40, height: 40}}
-              />
               <Text
                 style={{
                   color: 'white',
@@ -214,6 +210,10 @@ const Match = ({route}) => {
                 }}>
                 {parseFloat(data.nutrients.FAT).toFixed()}
               </Text>
+              <Image
+                source={require('../assets/fat.png')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
 
@@ -226,7 +226,7 @@ const Match = ({route}) => {
               flexDirection: 'row',
               gap: 10,
               marginBottom: 15,
-              backgroundColor: '#207747',
+              // backgroundColor: '#207747',
               padding: 10,
               borderRadius: 15,
             }}>
@@ -246,10 +246,6 @@ const Match = ({route}) => {
                 flexDirection: 'row',
                 gap: 10,
               }}>
-              <Image
-                source={require('../assets/fiber.png')}
-                style={{width: 40, height: 40}}
-              />
               <Text
                 style={{
                   color: 'white',
@@ -258,6 +254,10 @@ const Match = ({route}) => {
                 }}>
                 {parseFloat(data.nutrients.FIBTG).toFixed()}
               </Text>
+              <Image
+                source={require('../assets/fiber.png')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
 
@@ -270,7 +270,7 @@ const Match = ({route}) => {
               flexDirection: 'row',
               gap: 10,
               marginBottom: 15,
-              backgroundColor: '#207747',
+              // backgroundColor: '#207747',
               padding: 10,
               borderRadius: 15,
             }}>
@@ -290,10 +290,6 @@ const Match = ({route}) => {
                 flexDirection: 'row',
                 gap: 10,
               }}>
-              <Image
-                source={require('../assets/protien.png')}
-                style={{width: 40, height: 40}}
-              />
               <Text
                 style={{
                   color: 'white',
@@ -302,6 +298,10 @@ const Match = ({route}) => {
                 }}>
                 {parseFloat(data.nutrients.PROCNT).toFixed()}
               </Text>
+              <Image
+                source={require('../assets/protien.png')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
 

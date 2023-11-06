@@ -1,12 +1,16 @@
-import {StyleSheet, Text, View} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {getCurrentUser} from '../firebase/firebaseAuth';
 
-const ChatMessage = ({data}) => {
+const ChatMessage = ({data, viewProfile}) => {
   const user = getCurrentUser();
+
+  console.log(data);
+
   return (
     <>
-      {data.userId != user.uid ? (
+      {data.userId !== user.uid ? (
         <View
           style={{
             maxWidth: '60%',
@@ -14,11 +18,12 @@ const ChatMessage = ({data}) => {
             justifyContent: 'space-between',
             borderRadius: 20,
             flexDirection: 'row',
-            margin: 10,
             alignSelf: 'flex-start',
             gap: 10,
+            margin: 10,
+            // backgroundColor: 'blue',
           }}>
-          <View
+          <TouchableOpacity
             style={{
               width: 40,
               height: 40,
@@ -26,16 +31,34 @@ const ChatMessage = ({data}) => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 20,
-            }}></View>
+            }}
+            onPress={() => {
+              viewProfile(data.profileImage);
+            }}>
+            <Image
+              source={{uri: data.profileImage}}
+              style={{width: '100%', height: '100%', borderRadius: 20}}
+            />
+          </TouchableOpacity>
           <View
             style={{
               maxWidth: '80%',
               backgroundColor: 'white',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 20,
+              borderRadius: 15,
               padding: 10,
             }}>
+            <Text
+              style={{
+                color: 'black',
+                alignSelf: 'flex-start',
+                marginBottom: 10,
+                fontWeight: '600',
+              }}>
+              {/* Username */}
+              {data.username}
+            </Text>
             <Text
               style={{
                 color: 'black',
@@ -66,7 +89,7 @@ const ChatMessage = ({data}) => {
               backgroundColor: '#207747',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: 20,
+              borderRadius: 15,
               padding: 10,
             }}>
             <Text
@@ -87,7 +110,12 @@ const ChatMessage = ({data}) => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 20,
-            }}></View>
+            }}>
+            <Image
+              source={{uri: data.profileImage}}
+              style={{width: '100%', height: '100%', borderRadius: 20}}
+            />
+          </View>
         </View>
       )}
     </>

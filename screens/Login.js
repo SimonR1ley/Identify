@@ -20,6 +20,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [isSecret, setIsSecret] = useState(true);
+
   const navigation = useNavigation();
 
   const logOn = async () => {
@@ -110,7 +112,7 @@ const Login = () => {
                 onChangeText={newText => setEmail(newText)}
               />
 
-              <TextInput
+              {/* <TextInput
                 style={{
                   width: '90%',
                   height: 50,
@@ -122,7 +124,51 @@ const Login = () => {
                 placeholder="Password"
                 placeholderTextColor="white"
                 onChangeText={newText => setPassword(newText)}
-              />
+              /> */}
+
+              <View
+                style={{
+                  height: 50,
+                  width: '90%',
+                  backgroundColor: '#2A2D2E',
+                  flexDirection: 'row',
+                  borderRadius: 15,
+                  position: 'relative',
+                }}>
+                <TextInput
+                  secureTextEntry={isSecret}
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    backgroundColor: '#2A2D2E',
+                    borderRadius: 10,
+                    textAlign: 'center',
+                    color: 'white',
+                  }}
+                  placeholder={'Password'}
+                  placeholderTextColor="white"
+                  onChangeText={newText => setPassword(newText)}
+                />
+                <TouchableOpacity
+                  style={{
+                    width: '20%',
+                    height: 50,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    // backgroundColor: "green",
+                    position: 'absolute',
+                    right: 0,
+                  }}
+                  onPress={() => setIsSecret(prevState => !prevState)}>
+                  {!isSecret ? (
+                    // <Icon name="eye" size={20} color="#DFDFDF" />
+                    <Image source={require('../assets/eye-open.png')} />
+                  ) : (
+                    // <Icon name="eye-slash" size={20} color="#DFDFDF" />
+                    <Image source={require('../assets/eye-closed.png')} />
+                  )}
+                </TouchableOpacity>
+              </View>
 
               <Button
                 title="Forgot Password?"
@@ -176,23 +222,15 @@ const Login = () => {
             height: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#2FA05E',
-            flexDirection: 'column',
           }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 22,
-              marginBottom: 10,
-            }}>
+          <Image
+            source={require('../assets/background.png')}
+            style={{width: '100%', height: '100%', position: 'absolute'}}
+          />
+          <Text style={{color: 'white', textAlign: 'center', fontSize: 23}}>
             Loading
           </Text>
-          <ActivityIndicator
-            animating={loading}
-            size={'large'}
-            color={'white'}
-          />
+          <ActivityIndicator animating={loading} size={40} color={'white'} />
         </View>
       )}
     </>

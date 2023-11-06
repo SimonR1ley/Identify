@@ -38,6 +38,7 @@ const Chat = ({route}) => {
     if (inputText) {
       await addMessage({
         userId: user.uid,
+        profileImage: user.photoURL,
         username: user.displayName,
         message: inputText,
         createdAt: firestore.Timestamp.now(),
@@ -49,7 +50,15 @@ const Chat = ({route}) => {
   };
 
   const renderMessage = ({item}) => {
-    return <ChatMessage data={item} />;
+    return <ChatMessage data={item} viewProfile={ViewProfile} />;
+  };
+
+  const [viewImg, setViewImg] = useState('');
+  const [imgViewActive, setImgViewActive] = useState(false);
+
+  const ViewProfile = img => {
+    setViewImg(img);
+    setImgViewActive(true);
   };
 
   return (
@@ -57,6 +66,27 @@ const Chat = ({route}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       style={{flex: 1}}>
       <View style={styles.container}>
+        {imgViewActive ? (
+          <TouchableOpacity
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              backgroundColor: 'rgba(50, 50, 50, 0.9)',
+              zIndex: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              setImgViewActive(false);
+            }}>
+            <Image
+              source={{uri: viewImg}}
+              style={{width: 300, height: 300, borderRadius: 500}}
+            />
+          </TouchableOpacity>
+        ) : null}
+
         <View
           style={{
             width: '100%',
@@ -84,7 +114,10 @@ const Chat = ({route}) => {
                 // backgroundColor: 'red',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: 10,
+                // marginRight: 10,
+                position: 'absolute',
+                zIndex: 2,
+                top: 50,
               }}
               onPress={() => {
                 navigation.goBack();
@@ -94,32 +127,18 @@ const Chat = ({route}) => {
                 source={require('../assets/return2.png')}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 100,
-              }}
-              //   onPress={() => navigation.push('FriendProfile', {friends})}
-            >
-              {/* <Image
-                style={{width: '100%', height: '100%', borderRadius: 100}}
-                source={{uri: users.friends.profileImage}}
-              /> */}
-            </TouchableOpacity>
             <View
               style={{
-                width: '50%',
+                width: '100%',
                 height: 70,
                 // backgroundColor: 'red',
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 justifyContent: 'center',
                 // paddingLeft: 30,
-                marginLeft: 10,
               }}>
-              <Text style={{fontSize: 20, fontWeight: '500', color: 'white'}}>
+              <Text style={{fontSize: 26, fontWeight: '700', color: 'white'}}>
                 {/* {users.friends.name} */}
-                {user.displayName}
+                Let's talk
               </Text>
             </View>
           </View>

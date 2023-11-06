@@ -1,6 +1,7 @@
 import {db} from '../config/firebase';
 import {uploadToStorage} from './firebaseStorage';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 export const createUserInDb = async (
   // profileImage,
@@ -126,5 +127,25 @@ export const getAllMessagesFromCollection = async () => {
   } catch (e) {
     console.log('Something went wrong: ' + e);
     return [];
+  }
+};
+
+export const addImageToCollection = async img => {
+  console.log('Image Post', img);
+  try {
+    const docRef = await firestore().collection('images').add({image: img});
+
+    const imageURL = await uploadToStorage(img, `images/${docRef.id}`);
+
+    console.log('Added image successfully with ID:', docRef.id);
+    // Get the download URL for the image stored in Firebase Storage
+
+    const storageRef = storage().ref(`images/${docRef.id}`);
+    const url = await storageRef.getDownloadURL();
+    // console.log('Image Download URL:', url);
+    return imageURL; // Return the download URL
+  } catch (e) {
+    console.error('Something went wrong: ' + e);
+    return null; // Handle the error as needed
   }
 };

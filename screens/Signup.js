@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -30,7 +32,7 @@ const Signup = () => {
 
   const registerUser = async () => {
     console.log('Registering');
-    if (password != passwordConVal) {
+    if (password !== passwordConVal) {
       Alert.alert('Try Again', 'Passwords do not match.', [
         {
           text: 'Try Again',
@@ -60,14 +62,17 @@ const Signup = () => {
       await registerNewUser(email.toLowerCase(), password).then(async () => {
         await updateAuthProfile(username);
         // await AsyncStorage.setItem('profileSetupStatus', 'notCompleted');
-        // navigation.navigate('WelcomeScreen', {name, surname});
         console.log('User Registerd!!!');
+        navigation.navigate('ProfilePicture', {name, surname});
         setLoading(false);
       });
     }
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+    <KeyboardAvoidingView
+      // eslint-disable-next-line no-undef
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={{flex: 1, backgroundColor: '#FFFFFF'}}>
       {!loading ? (
         <>
           <View style={{width: '100%', height: '25%', marginBottom: 20}}>
@@ -219,7 +224,7 @@ const Signup = () => {
                 width: 100,
                 height: 50,
               }}
-              onPress={() => navigation.navigate('Onbarding')}
+              onPress={() => navigation.navigate('Login')}
             />
           </View>
         </>
@@ -231,11 +236,17 @@ const Signup = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Loading</Text>
-          <ActivityIndicator animating={loading} size={40} />
+          <Image
+            source={require('../assets/background.png')}
+            style={{width: '100%', height: '100%', position: 'absolute'}}
+          />
+          <Text style={{color: 'white', textAlign: 'center', fontSize: 23}}>
+            Loading
+          </Text>
+          <ActivityIndicator animating={loading} size={40} color={'white'} />
         </View>
       )}
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

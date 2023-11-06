@@ -8,20 +8,21 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
 const Matches = ({route}) => {
-  const {imageSource} = route.params;
+  const {imageSource, apiResponse} = route.params;
 
   const navigation = useNavigation();
 
   const [responseData, setResponseData] = useState();
   const [loading, setLoading] = useState(false);
 
-  console.log(imageSource);
+  console.log('Matches API Response', apiResponse);
 
   const data = [
     {key: '1', backgroundColor: '#207747', name: 'Pizza'},
@@ -41,81 +42,100 @@ const Matches = ({route}) => {
     setLoading(true);
     axios
       .get(
-        'https://api.edamam.com/api/food-database/v2/parser?ingr=' +
-          name +
-          '&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e',
-        // `https://api.edamam.com/api/food-database/v2/parser?ingr=pizza&app_id=${APP_ID}&app_key=${API_KEY}`,
+        `https://api.edamam.com/api/food-database/v2/parser?ingr=${apiResponse}&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e`,
+
+        // 'https://api.edamam.com/api/food-database/v2/parser?ingr=breakfastburrito&app_id=a39268e3&app_key=cf58286a939f09ad9438b5f10088665e',
       )
       .then(response => {
         // Handle the recipe data here
-        console.log('API Response', response.data.hints[0].food);
+        // console.log('API Response', response.data.hints[0].food);
+        console.log('API Response', response.data);
         // setResponseData(response);
         setLoading(false);
-        if (!loading) {
+        if (!loading && response != undefined) {
           navigation.navigate('Match', {
             data: response.data.hints[0].food,
             img: imageSource,
             name: name,
           });
         }
+        if (response === 'undefined') {
+        }
       })
       .catch(error => {
         // Handle any errors
         console.error(error);
+        setLoading(false);
+        Alert.alert(
+          'No Data 🍔',
+          'There is no data matching this food type.',
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK button pressed'),
+            },
+          ],
+          {
+            cancelable: true, // Whether the alert can be dismissed by tapping outside it
+            onDismiss: () => console.log('Alert was dismissed'),
+            type: 'info', // You can use 'info', 'error', or 'warning' for different alert types
+            style: 'default', // You can customize the style of the alert
+          },
+        );
       });
   };
 
-  const renderItem = ({item}) => (
-    <View
-      style={{
-        width: 414,
-        height: 80,
-      }}>
-      <TouchableOpacity
-        style={{
-          width: '85%',
-          height: '100%',
-          backgroundColor: item.backgroundColor,
-          // backgroundColor: 'rgba(60, 60, 60, 0.4)',
-          borderRadius: 20,
-          padding: 20,
-          alignSelf: 'center',
-          // marginRight: 20,
-          // marginLeft: 30,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          // borderBottomWidth: 0.3,
-          // borderBottomColor: 'white',
-          // borderStyle: 'solid',
-        }}
-        onPress={() => UseImage(item.name)}>
-        <Text
-          style={{
-            // position: 'absolute',
-            // bottom: 10,
-            // right: 10,
-            color: 'white',
-            fontWeight: '600',
-            fontSize: 16,
-          }}>
-          {item.name}
-        </Text>
-        <Text
-          style={{
-            // position: 'absolute',
-            // bottom: 10,
-            // right: 10,
-            color: 'white',
-            fontWeight: '600',
-            fontSize: 16,
-          }}>
-          0.7%
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+  // const renderItem = ({item}) => (
+  //   <View
+  //     style={{
+  //       width: 414,
+  //       height: 80,
+  //     }}>
+  //     <TouchableOpacity
+  //       style={{
+  //         width: '85%',
+  //         height: '100%',
+  //         backgroundColor: item.backgroundColor,
+  //         // backgroundColor: 'rgba(60, 60, 60, 0.4)',
+  //         borderRadius: 20,
+  //         padding: 20,
+  //         alignSelf: 'center',
+  //         // marginRight: 20,
+  //         // marginLeft: 30,
+  //         display: 'flex',
+  //         alignItems: 'center',
+  //         justifyContent: 'center',
+  //         flexDirection: 'row',
+  //         // borderBottomWidth: 0.3,
+  //         // borderBottomColor: 'white',
+  //         // borderStyle: 'solid',
+  //       }}
+  //       onPress={() => UseImage(item.name)}>
+  //       <Text
+  //         style={{
+  //           // position: 'absolute',
+  //           // bottom: 10,
+  //           // right: 10,
+  //           color: 'white',
+  //           fontWeight: '600',
+  //           fontSize: 22,
+  //         }}>
+  //         {item.name}
+  //       </Text>
+  //       {/* <Text
+  //         style={{
+  //           // position: 'absolute',
+  //           // bottom: 10,
+  //           // right: 10,
+  //           color: 'white',
+  //           fontWeight: '600',
+  //           fontSize: 16,
+  //         }}>
+  //         0.7%
+  //       </Text> */}
+  //     </TouchableOpacity>
+  //   </View>
+  // );
 
   // console.log(type);
   return (
@@ -188,18 +208,55 @@ const Matches = ({route}) => {
                   zIndex: 2,
                   bottom: 53,
                 }}>
-                <FlatList
-                  horizontal
-                  pagingEnabled={true}
+                <View
                   style={{
-                    width: '100%',
-                    // height: '65%',
-                    // backgroundColor: 'red',
-                  }}
-                  data={data}
-                  renderItem={renderItem}
-                  showsHorizontalScrollIndicator={false}
-                />
+                    width: 414,
+                    height: 80,
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      width: '85%',
+                      height: '100%',
+                      backgroundColor: '#207747',
+                      // backgroundColor: 'rgba(60, 60, 60, 0.4)',
+                      borderRadius: 20,
+                      padding: 20,
+                      alignSelf: 'center',
+                      // marginRight: 20,
+                      // marginLeft: 30,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                      // borderBottomWidth: 0.3,
+                      // borderBottomColor: 'white',
+                      // borderStyle: 'solid',
+                    }}
+                    onPress={() => UseImage(apiResponse)}>
+                    <Text
+                      style={{
+                        // position: 'absolute',
+                        // bottom: 10,
+                        // right: 10,
+                        color: 'white',
+                        fontWeight: '600',
+                        fontSize: 22,
+                      }}>
+                      {apiResponse}
+                    </Text>
+                    {/* <Text
+                      style={{
+                        // position: 'absolute',
+                        // bottom: 10,
+                        // right: 10,
+                        color: 'white',
+                        fontWeight: '600',
+                        fontSize: 16,
+                      }}>
+                      0.7%
+                    </Text> */}
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </>
@@ -211,23 +268,15 @@ const Matches = ({route}) => {
             height: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#2FA05E',
-            flexDirection: 'column',
           }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 22,
-              marginBottom: 10,
-            }}>
+          <Image
+            source={require('../assets/background.png')}
+            style={{width: '100%', height: '100%', position: 'absolute'}}
+          />
+          <Text style={{color: 'white', textAlign: 'center', fontSize: 23}}>
             Loading
           </Text>
-          <ActivityIndicator
-            animating={loading}
-            size={'large'}
-            color={'white'}
-          />
+          <ActivityIndicator animating={loading} size={40} color={'white'} />
         </View>
       )}
     </>
