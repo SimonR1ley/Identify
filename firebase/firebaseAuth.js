@@ -91,3 +91,23 @@ export const updateImageProfile = async imageUrl => {
     return false;
   }
 };
+
+// export const updateImageProfile = async imageUrl => {
+//   console.log('ImageURL: ' + imageUrl);
+//   try {
+//     const docRef = await firestore()
+//       .collection('profilepictures')
+//       .add({image: imageUrl});
+//     await uploadToStorage(imageUrl, `profilepictures/${docRef.id}`);
+
+//     const storageRef = storage().ref(`profilepictures/${docRef.id}`);
+//     await auth().currentUser.updateProfile({
+//       photoURL: storageRef,
+//     });
+//     console.log('Profile updated in Auth Successfully');
+//     return true;
+//   } catch (error) {
+//     console.log('Something went wrong in Update Auth: ' + error);
+//     return false;
+//   }
+// };

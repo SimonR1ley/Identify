@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState, useRef} from 'react';
 import {
@@ -130,57 +131,17 @@ function CameraScreen() {
         setAnalysing(false);
       })
       .catch(error => console.log('error', error));
-
-    // try {
-    //   const formData = new FormData();
-    //   formData.append('file', {
-    //     uri: imageUri,
-    //     type: 'image/jpeg', // Replace with the actual image type
-    //     name: 'image.jpg',
-    //     msg: 'test',
-    //   });
-
-    //   const response = await axios.post(
-    //     'http://192.168.0.196:3000/api/predict',
-    //     formData,
-    //     {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     },
-    //   );
-
-    //   // const response = await axios.get('http://192.168.30.36:3000/');
-    //   // Handle the response from the FastAPI backend here
-    //   console.log('Response:', response.data.predicted_class);
-
-    //   if (response.data.predicted_class) {
-    //     setApiResponse(response.data.predicted_class);
-    //     setAnalysing(false);
-    //   }
-
-    //   // await UseImage(response.data.predicted_class);
-    // } catch (error) {
-    //   console.error('Error:', error);
-    //   console.info(error);
-    // }
   };
 
   const UseImage = async () => {
     console.log('Using');
     setAnalysing(true);
 
-    // NEED TO UPLOAD IMAGES TO FIREBASE HERE
-
-    // Call the addImageToCollection function and await the result
     const imageURL = await addImageToCollection(imageSource);
 
     if (imageURL) {
-      // Do something with the imageURL, e.g., send it to FastAPI
-      console.log('Image URL LETSSSS GOOOOOOO:', imageURL);
       sendImageToFastAPI(imageURL);
     } else {
-      // Handle the case where adding the image to the collection failed
       console.error('Failed to add the image to the collection');
     }
 
@@ -308,6 +269,7 @@ function CameraScreen() {
                 justifyContent: 'center',
               }}
               onPress={() => {
+                // eslint-disable-next-line react-hooks/rules-of-hooks
                 useImgLibrary();
               }}>
               <Image
